@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  
+                            "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+                            "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >  
+  
+<hibernate-mapping package="com.bean">  
+    <class name="ProductPlan" table="productplan">  
+        <id name="id" column="id">  
+            <generator class="native"></generator>  
+        </id>   
+        <property name="store_id" column="store_id" type="java.lang.Integer" length="4" />   
+        <property name="num" column="num" type="java.lang.Integer" length="8" />  
+        <property name="price" column="price" type="java.lang.Integer" length="8" />  
+        <property name="name" column="name" type="java.lang.String"  
+            not-null="true" length="45"></property>   
+        <property name="state" column="state" type="java.lang.Integer" length="4" />  
+        <property name="up_id" column="up_id" type="java.lang.Integer" length="4" />  
+        <property name="type" column="type" type="java.lang.Integer" length="4" />  
+    </class>  
+</hibernate-mapping> 

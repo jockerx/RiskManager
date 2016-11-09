@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+<head>
+<title>经理统计</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords"
+	content="Play-Offs Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript">
+	
+	
+	
+	
+	 addEventListener("load", function() {setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+
+</script>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page 
+	import="org.apache.struts2.ServletActionContext"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page import="com.bean.ProductPlan"%>
+<%@ page import="com.bean.Member"%>
+<%@ page import="com.bean.Store"%>
+<%@ page import="com.bean.Log"%>
+<%@ page import="com.bean.Product"%>
+<%@ page import="java.util.*"%>
+<%
+	List<Object> oList;
+	oList = (List<Object>) ServletActionContext.getRequest().getSession().getAttribute("all");
+	List<Member> mList = (List<Member>) oList.get(0);
+	List<Store> sList = (List<Store>) oList.get(1);
+	List<Log> lList = (List<Log>) oList.get(2);
+	List<Product> pList = (List<Product>) oList.get(3);
+
+	int a = 0;
+	int b = 0;
+	int c = 0;
+	int cc = 0;
+	for (Member m : mList) {
+		if (m.getAge() <= 18)
+			a++;
+		else if (m.getAge() > 18 && m.getAge() <= 30)
+			b++;
+		else if (m.getAge() > 30)
+			c++;
+		cc++;
+	}
+%>
+<!--bootstrap-->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<!--coustom css-->
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/owl.carousel.css" rel="stylesheet">
+<link rel="stylesheet" href="css/chocolat.css" type="text/css"
+	media="screen" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/stat_normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/stat_default.css">
+<!--script-->
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.js"></script>
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<!--fonts-->
+<link href='http://fonts.useso.com/css?family=Quicksand:300,400,700'
+	rel='stylesheet' type='text/css'>
+<link
+	href='http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800'
+	rel='stylesheet' type='text/css'>
+<!--script-->
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event) {
+			event.preventDefault();
+			$('html,body').animate({
+				scrollTop : $(this.hash).offset().top
+			}, 900);
+		});
+	});
+</script>
+<style>
+body {
+	font-family: '微软雅黑 light';
+}
+</style>
+</head>
+<body>
+	<!--header-part-->
+	<div class="banner-background" id="to-top">
+		<div class="container">
+			<div class="nav-back">
+				<div class="navigation" style="width: 100%; margin-left: 0%">
+					<nav class="navbar navbar-default">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed"
+								data-toggle="collapse"
+								data-target="#bs-example-navbar-collapse-1"
+								aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+							</button>
+						</div>
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse"
+							id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">
+								<li><a class="active" href="/SSH/login.action">HOME <span
+										class="sr-only">(current)</span></a></li>
+								<li><a href="/SSH/stat.action">MEMBERSTAT</a></li>
+								<li><a href="pages.html">SALESTAT</a></li>
+								<li><a href="pages.html">BESE-SALE PRODUCTS</a></li>
+								<li><a href="/SSH/loginoff.action">LOGOUT</a></li>
+							</ul>
+						</div>
+						<!-- /.navbar-collapse -->
+						<div class="clearfix"></div>
+						<div class="clearfix"></div>
+					</nav>
+					<div class="clearfix"></div>
+				</div>
+				<div class="logo">
+					<h1>
+						<a href="/SSH/login.action">Dessert<span class="hlf">
+								House</span></a>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--header-ends-->
+
+	<!--content-->
+	<div class="our-products" style="border-top: 3px solid pink;">
+		<div class="container">
+			<div class="products-gallery" style="border-top: 3px solid pink;">
+				<h2>MEMBER LIST</h2>
+				<div class="col-md-12 arr">
+					<table class="table table-striped">
+						<!--<thead>
+						<tr>
+						  <th>#</th>
+						  <th>First Name</th>
+						  <th>Last Name</th>
+						  <th>Username</th>
+						</tr>
+					  </thead>  -->
+						<tbody style="text-align: center; vertical-align: middle;">
+							<tr>
+								<td>会员卡号</td>
+								<td>姓名</td>
+								<td>年龄</td>
+								<td>会员状态</td>
+								<td>VIP等级</td>
+								<td>居住地</td>
+							</tr>
+							<%
+								int i = 0;
+								while (mList.size() >= (i + 1)) {
+							%>
+							<tr>
+								<td><%=mList.get(i).getCardNum()%></td>
+								<td><%=mList.get(i).getName()%></td>
+								<td><%=mList.get(i).getAge()%></td>
+								<td>
+									<%
+										if (mList.get(i).getState() == 0) {
+									%>未激活 <%
+										} else if (mList.get(i).getState() == 1) {
+									%>已激活 <%
+										} else {
+									%>暂停中 <%
+										}
+									%>
+								</td>
+								<td><%=mList.get(i).getVipLevel()%></td>
+								<td><%=mList.get(i).getAddress()%></td>
+							</tr>
+							<%
+								i++;
+								}
+							%>
+						</tbody>
+					</table>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="products-gallery" style="border-top: 3px solid pink;">
+				<h2>BILL LIST</h2>
+				<div class="col-md-12 arr">
+					<table class="table table-striped">
+						<!--<thead>
+						<tr>
+						  <th>#</th>
+						  <th>First Name</th>
+						  <th>Last Name</th>
+						  <th>Username</th>
+						</tr>
+					  </thead>  -->
+						<tbody style="text-align: center; vertical-align: middle;">
+							<tr>
+								<td>会员卡号</td>
+								<td>店员id</td>
+								<td>商品id</td>
+								<td>数量</td>
+								<td>总价</td>
+								<td>交易日期</td>
+								<td>支付方式</td>
+							</tr>
+							<%
+								int j = 0;
+								while (lList.size() >= (j + 1)) {
+							%>
+							<tr>
+								<td><%=lList.get(j).getMember_id()%></td>
+								<td><%=lList.get(j).getWaiter_id()%></td>
+								<td><%=lList.get(j).getProduct_id()%></td>
+								<td><%=lList.get(j).getNum()%></td>
+								<td><%=lList.get(j).getTotal()%></td>
+								<td><%=lList.get(j).getDate()%></td>
+								<td>
+									<%
+										if (lList.get(j).getPaytype() == 1) {
+									%>会员卡 <%
+										} else {
+									%>现金 <%
+										}
+									%>
+								</td>
+							</tr>
+							<%
+								j++;
+								}
+							%>
+						</tbody>
+					</table>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="products-gallery" style="border-top: 3px solid pink;">
+				<h2>STAT</h2>
+				<div class="col-md-6 arr">
+					<div class="htmleaf-content">
+						<div id="canvas-holder">
+							<canvas id="chart-area" width="300" height="300" />
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="traits-technology"
+				style="border-top: 3px solid pink; padding-top: 2%;">
+				<div class="col-md-8 tt">
+					<ul class="traits-text">
+						<li><h3>Delicious, Sweet</h3></li>
+						<li><p>
+								<b style="font-weight: 600;">Happy is the man who is living
+									by his hobby.</b>
+							</p></li>
+						<li><p>
+								甜品，是一个很广的概念，大致分为甜味点心和广式的糖水。甜品，一般不会被当作正餐，通常作为下午茶的小食。</p>
+							<p>甜食，是治疗抑郁、放松心情的灵丹妙药。一般来说，喜欢吃甜食的人，脾气都不坏，她们的坏情绪可以被巧克力、蛋糕、布丁、奶酪等一切甜美的食物代谢殆尽。
+							</p></li>
+					</ul>
+					<!-- 
+					<ol>
+						<div class="col-md-6 brk">
+							<li><a href="#">Lorem Ipsum is simply dummy text.</a></li>
+							<li><a href="#">Lorem Ipsum is simply dummy text.</a></li>
+							<li><a href="#">Lorem Ipsum is simply dummy text.</a></li>
+						</div>
+						<div class="col-md-6 brk">
+							<li><a href="#">Lorem Ipsum is simply dummy text.</a></li>
+							<li><a href="#">Lorem Ipsum is simply dummy text.</a></li>
+							<li><a href="#">Lorem Ipsum is simply dummy text.</a></li>
+						</div>
+						<div class="clearfix"></div>
+					</ol> -->
+				</div>
+				<div class="col-md-4 tt">
+					<div class="traits-logos">
+						<img src="./images/home_bg.png" alt="" style="padding-top: 20%"
+							class="img-responsive" />
+						<!--  <div class="col-xs-6 col-md-6 tt brk2">
+							<span class="glyphicon glyphicon-leaf bgtl" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-6 col-md-6 tt brk2">
+							<span class="glyphicon glyphicon-grain bgtl" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-6 col-md-6 tt brk2">
+							<span class="glyphicon glyphicon-fire bgtl" aria-hidden="true"></span>
+						</div>
+						<div class="col-xs-6 col-md-6 tt brk2">
+							<span class="glyphicon glyphicon-camera bgtl" aria-hidden="true"></span>
+						</div>-->
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--content-ends-->
+	<!--brand-logos-->
+	<div class="brand-logo">
+		<div class="container">
+			<div class="col-xs-6 col-md-3 brk3">
+				<a href=""><img src="./images/bd1.png" alt=""
+					class="img-responsive" /></a>
+			</div>
+			<div class="col-xs-6 col-md-3 brk3">
+				<a href=""><img src="./images/bd2.png" alt=""
+					class="img-responsive" /></a>
+			</div>
+			<div class="col-xs-6 col-md-3 brk3">
+				<a href=""><img src="./images/bd3.png" alt=""
+					class="img-responsive" /></a>
+			</div>
+			<div class="col-xs-6 col-md-3 brk3">
+				<a href=""><img src="./images/bd4.png" alt=""
+					class="img-responsive" /></a>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!--brand-ends-->
+	<!--footer-->
+	<div class="footer">
+		<div class="container">
+			<div class="col-md-6 mrg1">
+				<div class="col-md-4 brk4">
+					<div class="about">
+						<h4>ABOUT</h4>
+						<ul>
+							<li><a href="about.html">Company Info</a></li>
+							<li><a href="#">Sollution</a></li>
+							<li><a href="services.html">Services</a></li>
+							<li><a href="about.html">Team</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 brk4">
+					<div class="advice">
+						<h4>ADVICE</h4>
+						<ul>
+							<li><a href="#">Faqs</a></li>
+							<li><a href="#">Accounts</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 brk4">
+					<div class="join-in">
+						<h4>JOIN IN</h4>
+						<ul>
+							<li><a href="#">Forums</a></li>
+							<li><a href="#">Promotions</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="col-md-3 brk5">
+				<div class="follow-us">
+					<h4>FOLLOW US</h4>
+					<ul>
+						<li><a href="#" class="fb"></a></li>
+						<li><a href="#" class="twt"></a></li>
+						<li><a href="#" class="gpls"></a></li>
+						<li><a href="#" class="pint"></a></li>
+						<li><a href="#" class="lnkdin"></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-3 brk5">
+				<div class="copy-rt">
+					<h4>COPYRIGHT</h4>
+					<p>Copyright &copy; 2015.Company name All rights reserved.</p>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!--footer-->
+	<!---->
+	<script src="js/stat_Chart.js"></script>
+	<script>
+		var pieData = [ {
+			value :
+	<%=a%>
+		,
+			color : "#F7464A",
+			highlight : "#FF5A5E",
+			label : "<=18"
+		}, {
+			value :
+	<%=b%>
+		,
+			color : "#46BFBD",
+			highlight : "#5AD3D1",
+			label : "<=30"
+		}, {
+			value :
+	<%=c%>
+		,
+			color : "#FDB45C",
+			highlight : "#FFC870",
+			label : ">30"
+		}
+
+		];
+
+		window.onload = function() {
+			var ctx = document.getElementById("chart-area").getContext("2d");
+			window.myPie = new Chart(ctx).Pie(pieData);
+		};
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+			var defaults = {
+			containerID: 'toTop', // fading element id
+			containerHoverID: 'toTopHover', // fading element hover id
+			scrollSpeed: 1200,
+			easingType: 'linear' 
+			};
+			 */
+			$().UItoTop({
+				easingType : 'easeOutQuart'
+			});
+		});
+	</script>
+	<a href="#to-top" id="toTop" style="display: block;"> <span
+		id="toTopHover" style="opacity: 1;"> </span></a>
+	<!---->
+</body>
+</html>

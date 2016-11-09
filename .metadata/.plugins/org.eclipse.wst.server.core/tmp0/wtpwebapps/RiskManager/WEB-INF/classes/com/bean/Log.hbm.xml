@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  
+                            "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+                            "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >  
+  
+<hibernate-mapping package="com.bean">  
+    <class name="Log" table="log">  
+        <id name="id" column="id">  
+            <generator class="native"></generator>  
+        </id>  
+        <property name="member_id" column="member_id" type="java.lang.String" length="45" />
+        <property name="waiter_id" column="waiter_id" type="java.lang.Integer" length="10" />
+        <property name="product_id" column="product_id" type="java.lang.Integer" length="10" />
+        <property name="num" column="num" type="java.lang.Integer" length="8" />
+        <property name="total" column="total" type="java.lang.Integer" length="12" />
+        <property name="date" column="date" type="java.lang.String" length="45" />   
+        <property name="paytype" column="paytype" type="java.lang.Integer" length="10" />
+    </class>  
+</hibernate-mapping> 

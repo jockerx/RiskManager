@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  
+                            "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+                            "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >  
+  
+<hibernate-mapping package="com.bean">  
+    <class name="Member" table="member">  
+        <id name="cardNum" column="cardNum">  
+            <generator class="native"></generator>  
+        </id>  
+        <property name="bankCardBalance" column="bankCardBalance" type="java.lang.Integer" length="10" />  
+        <property name="state" column="state" type="java.lang.Integer" length="3" />  
+        <property name="suspendDate" column="suspendDate" type="java.util.Date" length="30" />   
+        <property name="vipLevel" column="vipLevel" type="java.lang.Integer" length="3" />   
+        <property name="points" column="points" type="java.lang.Integer" length="8" />  
+        <property name="username" column="username" type="java.lang.String"  
+            not-null="true" length="15"></property> 
+        <property name="name" column="name" type="java.lang.String"  
+            not-null="true" length="45"></property> 
+        <property name="registrationDate" column="registrationDate" type="java.util.Date" length="30" />  
+        <property name="age" column="age" type="java.lang.Integer" length="4" />  
+        <property name="address" column="address" type="java.lang.String"  
+            not-null="true" length="45"></property> 
+    </class>  
+</hibernate-mapping> 

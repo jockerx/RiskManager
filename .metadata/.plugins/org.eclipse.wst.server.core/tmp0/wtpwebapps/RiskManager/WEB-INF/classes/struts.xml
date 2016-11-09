@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <include file="struts-default.xml"/>
+    <package name="ljz" extends="struts-default">
+    
+        <!--用户注册  -->
+        <action name="register" class="regAction">
+            <result name="input">/register.jsp</result>
+            <result name="success">/success.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--用户登录  -->
+        <action name="login" class="logAction">
+            <result name="member">/member_home.jsp</result>
+            <result name="hqWaiter" type="redirect">allPlan.action</result>
+            <result name="bWaiter">/branchWaiter_home.jsp</result>
+            <result name="sysAdmin" type="redirect">allStore.action</result>
+            <result name="mamager" type="redirect">allPlanToManager.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员资格激活  -->
+        <action name="Member_activate" class="Member_activateAction">
+            <result name="success" type="redirect">login.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员更新信息  -->
+        <action name="Member_update" class="Member_updateAction">
+            <result name="success" type="redirect">login.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员删除  -->
+        <action name="Member_delete" class="Member_deleteAction">
+            <result name="success">/login.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员积分兑换  -->
+        <action name="Member_pointsToCard" class="Member_pointsToCardAction">
+            <result name="success" type="redirect">login.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员记录  -->
+        <action name="Log" class="LogAction">
+            <result name="success_m">/member_query.jsp</result>
+            <result name="success_h">/headquartersWaiter_query.jsp</result>
+            <result name="success_b">/branchWaiter_query.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员记录  -->
+        <action name="HLog" class="HLogAction">
+            <result name="success">/headquartersWaiter_query.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--会员记录  -->
+        <action name="BLog" class="BLogAction">
+            <result name="success">/branchWaiter_query.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--销售  -->
+        <action name="Sale" class="SaleAction">
+            <result name="success">/branchWaiter_home.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--预定  -->
+        <action name="Buy" class="BuyAction">
+            <result name="success" type="redirect">AllProduct.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--所有商品 -->
+        <action name="AllProduct" class="AllProductAction">
+            <result name="success">/member_product.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员主页  -->
+        <action name="allStore" class="allStoreAction">
+            <result name="success">/systemAdministrator_home.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员添加店员  -->
+        <action name="SysAdmin_addWaiter" class="SysAdmin_addWaiterAction">
+            <result name="success" type="redirect">allStore.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员添加店铺 -->
+        <action name="SysAdmin_addStore" class="SysAdmin_addStoreAction">
+            <result name="success" type="redirect">allStore.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员更新店员准备 -->
+        <action name="SysAdmin_updateWaiterReady" class="SysAdmin_updateWaiterReadyAction">
+            <result name="success">/systemAdministrator_updateWaiter.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员更新店员 -->
+        <action name="SysAdmin_updateWaiter" class="SysAdmin_updateWaiterAction">
+            <result name="success" type="redirect">allStore.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员更新店铺准备 -->
+        <action name="SysAdmin_updateStoreReady" class="SysAdmin_updateStoreReadyAction">
+            <result name="success">/systemAdministrator_updateStore.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员更新店铺 -->
+        <action name="SysAdmin_updateStore" class="SysAdmin_updateStoreAction">
+            <result name="success" type="redirect">allStore.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员删除店员 -->
+        <action name="SysAdmin_deleteWaiter" class="SysAdmin_deleteWaiterAction">
+            <result name="success" type="redirect">allStore.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--系统管理员删除店铺 -->
+        <action name="SysAdmin_deleteStore" class="SysAdmin_deleteStoreAction">
+            <result name="success" type="redirect">allStore.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--总店服务员主页  -->
+        <action name="allPlan" class="allPlanAction">
+            <result name="success">/headquartersWaiter_home.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--总店服务员加计划  -->
+        <action name="addPlan" class="addPlanAction">
+            <result name="success" type="redirect">allPlan.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--总店服务员更新计划准备  -->
+        <action name="updatePlanReady" class="updatePlanReadyAction">
+            <result name="success">/headquartersWaiter_updatePlan.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--总店服务员更新计划  -->
+        <action name="updatePlan" class="updatePlanAction">
+            <result name="success" type="redirect">allPlan.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--总店服务员删除计划  -->
+        <action name="deletePlan" class="deletePlanAction">
+            <result name="success" type="redirect">allPlan.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--经理主页  -->
+        <action name="allPlanToManager" class="allPlanToManagerAction">
+            <result name="success">/manager_home.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--经理主页  -->
+        <action name="stat" class="StatAction">
+            <result name="success">/manager_stat.jsp</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--经理批准  -->
+        <action name="approvalPlan" class="approvalPlanAction">
+            <result name="success" type="redirect">allPlanToManager.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        <!--经理驳回  -->
+        <action name="rejectPlan" class="rejectPlanAction">
+            <result name="success" type="redirect">allPlanToManager.action</result>
+            <result name="error">/fail.jsp</result>
+        </action>
+        
+        
+        <!--注销登录  -->
+        <action name="loginoff" class="logoffAction">
+            <result name="success">/login.jsp</result>
+        </action>
+        
+    </package>
+
+    <!-- Add packages here -->
+
+</struts>

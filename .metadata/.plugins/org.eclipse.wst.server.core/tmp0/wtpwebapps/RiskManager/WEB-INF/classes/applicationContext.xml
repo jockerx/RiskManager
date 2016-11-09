@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+  
+    <!-- 定义数据源的信息 -->  
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
+        destroy-method="close">  
+        <property name="driverClass">  
+            <value>com.mysql.jdbc.Driver</value>  
+        </property>  
+        <property name="jdbcUrl">  
+            <value>jdbc:mysql://localhost:3306/web_data</value>  
+        </property>  
+        <property name="user">  
+            <value>root</value>  
+        </property>  
+        <property name="password">  
+            <value></value>  
+        </property>  
+        <property name="maxPoolSize">  
+            <value>80</value>  
+        </property>  
+        <property name="minPoolSize">  
+            <value>1</value>  
+        </property>  
+        <property name="initialPoolSize">  
+            <value>1</value>  
+        </property>  
+        <property name="maxIdleTime">  
+            <value>20</value>  
+        </property>  
+    </bean>  
+  
+    <!--定义Hibernate的SessionFactory -->  
+    <!-- SessionFactory使用的数据源为上面的数据源 -->  
+    <!-- 指定了Hibernate的映射文件和配置信息 -->  
+    <bean id="sessionFactory"  
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  
+        <property name="dataSource">  
+            <ref local="dataSource" />  
+        </property>  
+        <property name="mappingResources">  
+            <list>  
+                <value>com/bean/User.hbm.xml</value> 
+                <value>com/bean/Member.hbm.xml</value> 
+                <value>com/bean/Store.hbm.xml</value> 
+                <value>com/bean/Waiter.hbm.xml</value> 
+                <value>com/bean/ProductPlan.hbm.xml</value> 
+                <value>com/bean/Product.hbm.xml</value> 
+                <value>com/bean/Log.hbm.xml</value> 
+                <value>com/bean/PayLog.hbm.xml</value> 
+            </list>  
+        </property>  
+        <property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>  
+                <prop key="show_sql">true</prop>  
+                <prop key="hibernate.jdbc.batch_size">20</prop>  
+            </props>  
+        </property>  
+    </bean>  
+  
+    <bean id="transactionManager"  
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+        <property name="sessionFactory" ref="sessionFactory" />  
+    </bean>  
+    
+    <!--用户dao层 --> 
+    <bean id="baseDao" class="com.dao.impl.UserDao">  
+        <property name="sessionFactory">  
+            <ref bean="sessionFactory" />  
+        </property>  
+    </bean>  
+    
+    <!--店铺dao层 --> 
+    <bean id="baseStoreDao" class="com.dao.impl.StoreDao">  
+        <property name="sessionFactory">  
+            <ref bean="sessionFactory" />  
+        </property>  
+    </bean>  
+  
+    <!--商品dao层 --> 
+    <bean id="baseProductDao" class="com.dao.impl.ProductDao">
+        <property name="sessionFactory">  
+            <ref bean="sessionFactory" />  
+        </property>  
+    </bean> 
+    
+    <!--用户注册业务逻辑类 -->  
+    <bean id="userManager" class="com.service.impl.UserManagerImpl">  
+        <property name="dao">  
+            <ref bean="baseDao" />  
+        </property>  
+    </bean>  
+    
+    <!--店铺业务逻辑类 -->  
+    <bean id="storeManager" class="com.service.impl.StoreManagerImpl">  
+        <property name="dao">  
+            <ref bean="baseStoreDao" />  
+        </property>  
+    </bean>  
+  
+    <!--商品业务逻辑类 -->  
+    <bean id="productManager" class="com.service.impl.ProductManagerImpl">  
+        <property name="dao">  
+            <ref bean="baseProductDao" />  
+        </property>  
+    </bean>  
+    
+    <!-- 用户注册的Action -->  
+    <bean id="regAction" class="com.action.RegisterAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean>  
+  
+    <!-- more bean definitions go here -->  
+    
+    <!-- 用户登录的Action -->  
+    <bean id="logAction" class="com.action.LoginAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员激活的Action -->  
+    <bean id="Member_activateAction" class="com.action.Member_activateAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员更新的Action -->  
+    <bean id="Member_updateAction" class="com.action.Member_updateAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员删除的Action -->  
+    <bean id="Member_deleteAction" class="com.action.Member_deleteAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员积分兑换的Action -->  
+    <bean id="Member_pointsToCardAction" class="com.action.Member_pointsToCardAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员记录的Action -->  
+    <bean id="LogAction" class="com.action.LogAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员记录的Action -->  
+    <bean id="HLogAction" class="com.action.HLogAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 会员记录的Action -->  
+    <bean id="BLogAction" class="com.action.BLogAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 销售的Action -->  
+    <bean id="SaleAction" class="com.action.SaleAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 销售的Action -->  
+    <bean id="BuyAction" class="com.action.BuyAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 所有商品的Action -->  
+    <bean id="AllProductAction" class="com.action.AllProductAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 显示所有店铺的Action -->  
+    <bean id="allStoreAction" class="com.action.AllStoreAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>  
+        <property name="storeManager">  
+            <ref bean="storeManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 添加店员的Action -->  
+    <bean id="SysAdmin_addWaiterAction" class="com.action.SysAdmin_addWaiterAction">  
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>
+    </bean> 
+    
+    <!-- 添加店铺的Action -->  
+    <bean id="SysAdmin_addStoreAction" class="com.action.SysAdmin_addStoreAction">
+        <property name="storeManager">  
+            <ref bean="storeManager" />  
+        </property>  
+    </bean> 
+    
+    <!-- 更新店员准备的Action -->  
+    <bean id="SysAdmin_updateWaiterReadyAction" class="com.action.SysAdmin_updateWaiterReadyAction">
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property> 
+    </bean> 
+    
+    <!-- 更新店员的Action -->  
+    <bean id="SysAdmin_updateWaiterAction" class="com.action.SysAdmin_updateWaiterAction">
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>
+    </bean> 
+    
+    <!-- 更新店铺准备的Action -->  
+    <bean id="SysAdmin_updateStoreReadyAction" class="com.action.SysAdmin_updateStoreReadyAction">
+        <property name="storeManager">  
+            <ref bean="storeManager" />  
+        </property> 
+    </bean> 
+    
+    <!-- 更新店铺的Action -->  
+    <bean id="SysAdmin_updateStoreAction" class="com.action.SysAdmin_updateStoreAction">
+        <property name="storeManager">  
+            <ref bean="storeManager" />  
+        </property>
+    </bean> 
+    
+    <!-- 删除店员的Action -->  
+    <bean id="SysAdmin_deleteWaiterAction" class="com.action.SysAdmin_deleteWaiterAction">
+        <property name="userManager">  
+            <ref bean="userManager" />  
+        </property>
+    </bean> 
+    
+    <!-- 删除店铺的Action -->  
+    <bean id="SysAdmin_deleteStoreAction" class="com.action.SysAdmin_deleteStoreAction">
+        <property name="storeManager">  
+            <ref bean="storeManager" />  
+        </property>
+    </bean> 
+    
+    <!-- 显示自己提交的所有计划的Action -->  
+    <bean id="allPlanAction" class="com.action.AllPlanAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 提交新计划的Action -->  
+    <bean id="addPlanAction" class="com.action.HqWaiter_addPlanAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 更新计划准备的Action -->  
+    <bean id="updatePlanReadyAction" class="com.action.HqWaiter_updatePlanReadyAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 更新计划的Action -->  
+    <bean id="updatePlanAction" class="com.action.HqWaiter_updatePlanAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 删除计划的Action -->  
+    <bean id="deletePlanAction" class="com.action.HqWaiter_deletePlanAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 显示所有待审批计划的Action -->  
+    <bean id="allPlanToManagerAction" class="com.action.AllPlanToManagerAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 显示所有待审批计划的Action -->  
+    <bean id="StatAction" class="com.action.StatAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 批准计划的Action -->  
+    <bean id="approvalPlanAction" class="com.action.Manager_approvalPlanAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    <!-- 驳回计划的Action -->  
+    <bean id="rejectPlanAction" class="com.action.Manager_rejectPlanAction">  
+        <property name="productManager">  
+            <ref bean="productManager" />  
+        </property>   
+    </bean> 
+    
+    
+    <!-- 登录注销 -->
+    <bean id="logoffAction" class="com.action.LoginoffAction">
+    </bean>
+    
+  
+</beans>  
